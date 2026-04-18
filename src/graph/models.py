@@ -46,7 +46,7 @@ class Graph:
       return True
       
     edge_mapping = {}
-    for edge in edges:
+    for edge in self.edges:
       if _is_valid_edge(edge):
         node1, node2, weight = edge._get_node1(), edge._get_node2(), edge._get_weight()
         edge_mapping[node1] = weight
