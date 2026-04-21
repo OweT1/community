@@ -3,11 +3,11 @@ from typing import List, Union
 
 from loguru import logger
 
-@dataclass(frozen=True)
+@dataclass(order=True, frozen=True)
 class Node:
   id: Union[int, str]
   
-@dataclass(frozen=True)
+@dataclass(order=True, frozen=True)
 class Edge:
   node1: Node
   node2: Node
@@ -22,7 +22,11 @@ class Edge:
     self.weight == other.weight
 
 class Graph:
-  def __init__(self, nodes: List[Node], edges: List[Edge]):
+  def __init__(
+    self,
+    nodes: List[Node],
+    edges: List[Edge],
+  ):
     self.nodes = nodes
     self.edges = edges
 
@@ -35,42 +39,43 @@ class Graph:
   def _build_initial_communities(self):
     community_mapping = {}
     for node in self.nodes:
-      node_id = node.id
-      community_mapping[node] = node_id
+      community_mapping[node] = node
     self.community_mapping = community_mapping
     
   def _build_edge_mapping(self):
     def _is_valid_edge(edge: Edge):
       node1, node2 = edge.node1, edge.node2
-      if node1 not in self.nodes or node2 not in self.nodes or node1 == node2:
+      if node1 not in self.nodes or node2 not in self.nodes:
         logger.info("Node {} not in nodes list. Skipping...")
         return False
       return True
     
     graph_total_edge_weight = 0
-    node_edge_weight_mapping, adjacency_mapping = {}, {}
+    node_edge_weight_mapping, adjacency_matrix = {}, {}
     for edge in self.edges:
       if _is_valid_edge(edge):
         node1, node2, weight = edge.node1, edge.node2, edge.weight
-        node1_id = node1.id
         
         # Mapping for Adjacency matrix
-        if node1 not in adjacency_mapping:
-          adjacency_mapping[node1] = {}
-        adjacency_mapping[node1][node2] = weight
+        if node1 not in adjacency_matrix:
+          adjacency_matrix[node1] = {}
+        adjacency_matrix[node1][node2] = weight
         
-        if node2 not in adjacency_mapping:
-          adjacency_mapping[node2] = {}
-        adjacency_mapping[node2][node1] = weight
+        if node2 not in adjacency_matrix:
+          adjacency_matrix[node2] = {}
+        adjacency_matrix[node2][node1] = weight
         
         # Mapping for total edge weight for each node
-        node_edge_weight_mapping[node1] = node_edge_weight_mapping.get(node1, 0) + weight
-        node_edge_weight_mapping[node2] = node_edge_weight_mapping.get(node2, 0) + weight
+        if node1 == node2: # for `aggregate_communities`, where edge.node1 == edge.node2
+          node_edge_weight_mapping[node1] = node_edge_weight_mapping.get(node1, 0) + weight
+        else: # as per normal
+          node_edge_weight_mapping[node1] = node_edge_weight_mapping.get(node1, 0) + weight
+          node_edge_weight_mapping[node2] = node_edge_weight_mapping.get(node2, 0) + weight
         
         # Sum of total edge weight in graph
         graph_total_edge_weight += weight
 
-    self.adjacency_mapping = adjacency_mapping
+    self.adjacency_matrix = adjacency_matrix
     self.node_edge_weight_mapping = node_edge_weight_mapping
     self.graph_total_edge_weight = graph_total_edge_weight
 
