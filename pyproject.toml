@@ -11,4 +11,5 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "ipykernel>=7.2.0",
+    "ruff>=0.15.11",
 ]
