@@ -2,11 +2,10 @@ from typing import Dict, List, Union
 
 from loguru import logger
 
-from src.graph.models import Edge, Node, Graph
+from src.graph import Edge, Node, Graph
 
-# --- Louvain Algorithm --- #
 
-## --- Phase 1 --- ##
+# --- Phase 1 --- #
 def calculate_modularity(
   m: Union[int, float],
   nodes: list[Node],
@@ -108,7 +107,7 @@ def optimise_modularity(graph: Graph) -> Dict[Node, Node]:
   return new_community_mapping
 
 
-## --- Phase 2 --- #
+# --- Phase 2 --- #
 def get_root_parent(
   node: Node,
   community_mapping: Dict[Node, Node]
@@ -154,7 +153,7 @@ def aggregate_communities(
   return Graph(nodes=new_nodes, edges=new_edges)
 
 
-# --- Algorithm --- #
+# --- Main Algorithm --- #
 def louvain(graph: Graph, verbose=True):
   if verbose:
     i = 1
