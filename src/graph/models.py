@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Union
+from typing import Dict, List, Union
 
 from loguru import logger
 
@@ -31,14 +31,17 @@ class Graph:
         self,
         nodes: List[Node],
         edges: List[Edge],
+        community_mapping: Union[Dict[Node, Node], None] = None,
     ):
         self.nodes = nodes
         self.edges = edges
+        self.community_mapping = community_mapping
 
         self._build_initial()
 
     def _build_initial(self):
-        self._build_initial_communities()
+        if self.community_mapping is None:
+            self._build_initial_communities()
         self._build_edge_mapping()
 
     def _build_initial_communities(self):
