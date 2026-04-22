@@ -1,3 +1,3 @@
-from .models import Node, Edge, Graph
+from .models import Edge, Graph, Node
 
 __all__ = ["Node", "Edge", "Graph"]

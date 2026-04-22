@@ -11,5 +11,21 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "ipykernel>=7.2.0",
+    "isort>=8.0.1",
+    "pre-commit>=4.6.0",
     "ruff>=0.15.11",
 ]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+use_parentheses = true
+skip = [".gitignore"]
+
+# Section Headings
+import_heading_stdlib = "Standard Library Packages"
+import_heading_thirdparty = "Third Party Packages"
+import_heading_firstparty = "Local Project"
+
+[tool.ruff]
+line-length=100

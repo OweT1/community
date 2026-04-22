@@ -1,8 +1,11 @@
+# Standard Library Packages
 from typing import Dict, List, Union
 
+# Third Party Packages
 from loguru import logger
 
-from src.graph import Edge, Node, Graph
+# Local Project
+from src.graph import Edge, Graph, Node
 
 
 # --- Phase 1 --- #
@@ -123,9 +126,7 @@ def clean_community_mapping(community_mapping: Dict[Node, Node]) -> Dict[Node, N
     return new_mapping
 
 
-def aggregate_communities(
-    graph: Graph, new_community_mapping: Dict[Node, Node]
-) -> Graph:
+def aggregate_communities(graph: Graph, new_community_mapping: Dict[Node, Node]) -> Graph:
     cleaned_community_mapping = clean_community_mapping(new_community_mapping)
 
     new_nodes: list[Node] = sorted(list(cleaned_community_mapping.values()))

@@ -1,6 +1,8 @@
+# Standard Library Packages
 from dataclasses import dataclass
 from typing import Dict, List, Union
 
+# Third Party Packages
 from loguru import logger
 
 
@@ -74,9 +76,7 @@ class Graph:
                 adjacency_matrix[node2][node1] = weight
 
                 # Mapping for total edge weight for each node
-                if (
-                    node1 == node2
-                ):  # for `aggregate_communities`, where edge.node1 == edge.node2
+                if node1 == node2:  # for `aggregate_communities`, where edge.node1 == edge.node2
                     node_edge_weight_mapping[node1] = (
                         node_edge_weight_mapping.get(node1, 0) + weight
                     )
