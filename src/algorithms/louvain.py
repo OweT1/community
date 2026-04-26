@@ -148,7 +148,7 @@ def aggregate_communities(graph: Graph, new_community_mapping: Dict[Node, Node])
 
 
 # --- Main Algorithm --- #
-def louvain(graph: Graph, verbose=True):
+def louvain(graph: Graph, verbose=True) -> Graph:
     if verbose:
         i = 1
         logger.info(f"Started {i} iteration...")
@@ -181,4 +181,7 @@ def louvain(graph: Graph, verbose=True):
             new_val = map_delta.get(val)
             if new_val:
                 output_community_mapping[key] = new_val
-    return output_community_mapping
+    output_graph = Graph(
+        nodes=graph.nodes, edges=graph.edges, community_mapping=output_community_mapping
+    )
+    return output_graph
