@@ -28,6 +28,7 @@ skip = [".gitignore"]
 import_heading_stdlib = "Standard Library Packages"
 import_heading_thirdparty = "Third Party Packages"
 import_heading_firstparty = "Local Project"
+import_heading_localfolder = "Local Folder"
 
 [tool.ruff]
 line-length=100
