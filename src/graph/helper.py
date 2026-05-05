@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Third Party Packages
 import networkx as nx
 

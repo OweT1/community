@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Standard Library Packages
 from dataclasses import dataclass
 from typing import Dict, List, Union
