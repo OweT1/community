@@ -2,7 +2,7 @@ from __future__ import annotations
 
 # Standard Library Packages
 from functools import lru_cache
-from typing import Dict
+from typing import Dict, Optional
 
 # Local Project
 from src.graph import Edge, Node
@@ -52,6 +52,11 @@ def get_datasets() -> Dict[int, Dataset]:
     }
 
 
-DATASETS = get_datasets()
-DATASET_1 = DATASETS[1]
-DATASET_2 = DATASETS[2]
+def get_dataset(dataset_id: int) -> Optional[Dataset]:
+    datasets = get_datasets()
+    if dataset_id in datasets:
+        return datasets[dataset_id]
+    else:
+        raise ValueError(
+            f"Dataset of id {dataset_id} not found. Please use any of: {list(datasets.keys())}"
+        )
