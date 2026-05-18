@@ -36,10 +36,12 @@ class Graph:
         nodes: List[Node],
         edges: List[Edge],
         community_mapping: Union[Dict[Node, Node], None] = None,
+        has_communities: bool = False,
     ):
         self.nodes = nodes
         self.edges = edges
         self.community_mapping = community_mapping
+        self.has_communities = has_communities
 
         self._build_initial()
 

@@ -9,5 +9,5 @@ from src.graph import Graph
 
 class CommunityDetectionAlgorithm(ABC):
     @abstractmethod
-    def build_communities(self, graph: Graph, verbose: bool) -> Graph:
+    def build_communities(self, graph: Graph, *args, **kwargs) -> Graph:
         pass

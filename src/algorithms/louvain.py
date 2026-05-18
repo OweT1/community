@@ -151,7 +151,13 @@ class Louvain(CommunityDetectionAlgorithm):
         return Graph(nodes=new_nodes, edges=new_edges)
 
     # --- Main Algorithm --- #
-    def build_communities(self, graph: Graph, verbose=True) -> Graph:
+    def build_communities(
+        self, graph: Graph, force_build_communities: bool = False, verbose: bool = True
+    ) -> Graph:
+        if graph.has_communities and not force_build_communities:
+            logger.warning("Graph already has communities built. Skipping...")
+            return graph
+
         if verbose:
             i = 1
             logger.info(f"Started {i} iteration...")
@@ -185,6 +191,9 @@ class Louvain(CommunityDetectionAlgorithm):
                 if new_val:
                     output_community_mapping[key] = new_val
         output_graph = Graph(
-            nodes=graph.nodes, edges=graph.edges, community_mapping=output_community_mapping
+            nodes=graph.nodes,
+            edges=graph.edges,
+            community_mapping=output_community_mapping,
+            has_communities=True,
         )
         return output_graph
